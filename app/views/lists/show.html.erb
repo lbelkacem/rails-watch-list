@@ -1,15 +1,29 @@
-<h1><%= @list.name %></h1>
-<ul >
-  <% @list.bookmarks.each do |bookmark| %>
-    <li><%= bookmark.comment %></li>
-    <li><%= bookmark.movie.title %></li>
-    <li><%= bookmark.movie.overview %></li>
-    <%= image_tag bookmark.movie.poster_url, width: 200%>
-    <li><%= link_to 'Supprimer',
-                bookmark_path(bookmark),
-                data: {
-                  turbo_method: :delete,
-                  turbo_confirm: 'Êtes-vous sûr ?'
-                } %></li>
-  <% end %>
-</ul>
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('<%= cl_image_path @list.photo.key, crop: :fill %>')">
+  <div class="container">
+    <h1> <strong><%= @list.name %></strong> </h1>
+  </div>
+</div>
+
+
+<% @list.bookmarks.each do |bookmark| %>
+<div class="card-product m-5">
+  <%= image_tag bookmark.movie.poster_url%>
+  <div class="card-product-infos">
+    <h2><%= bookmark.movie.title %></h2>
+    <p><strong><%= bookmark.comment %></strong></p>
+    <p><%= bookmark.movie.overview %></p>
+
+  <p><%= link_to 'Supprimer',
+              bookmark_path(bookmark),
+              data: {
+                turbo_method: :delete,
+                turbo_confirm: 'Êtes-vous sûr ?'
+              } %>
+  </p>
+</div>
+</div>
+<% end %>
+
+<%= link_to 'Add a new film', new_list_bookmark_path(@list) %>
+<br>
+<%= link_to 'Back to my lists', root_path %>
